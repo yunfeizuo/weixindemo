@@ -1,13 +1,23 @@
-var express = require('express');
-var app = express();
+var http = require('http'),
+    fileSystem = require('fs'),
+    path = require('path');
 
-app.set('port', (process.env.PORT || 5000));
-app.use(express.static(__dirname + '/public'));
 
-app.get('/', function(request, response) {
-  response.send('Hello World!');
+// Configure our HTTP server to respond with Hello World to all requests.
+var server = http.createServer(function (request, response) {
+  var filePath = path.join(__dirname, 'test.html');
+    var stat = fileSystem.statSync(filePath);
+
+    response.writeHead(200, {
+        'Content-Type': 'text/html',
+        'Content-Length': stat.size
+    });
+
+  var readStream = fileSystem.createReadStream(filePath);
+    // We replaced all the event handlers with a simple call to readStream.pipe()
+    readStream.pipe(response);
 });
 
-app.listen(app.get('port'), function() {
-  console.log("Node app is running at localhost:" + app.get('port'));
-});
+
+// Listen on port 8000, IP defaults to 127.0.0.1
+server.listen(process.env.PORT || 5000);
