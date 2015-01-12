@@ -5,7 +5,7 @@ var http = require('http'),
 
 // Configure our HTTP server to respond with Hello World to all requests.
 var server = http.createServer(function (request, response) {
-  var filePath = path.join(__dirname, 'test.html');
+  var filePath = path.join(__dirname, 'content');
     var stat = fileSystem.statSync(filePath);
 
     response.writeHead(200, {
