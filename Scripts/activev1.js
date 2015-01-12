@@ -33,10 +33,11 @@ var active = function (u, a, v, p, l, i, b, t) {
             };
             var wxCallbacks = {
                 favorite: false,
-                ready: function () { },
-                cancel: function () { },
-                fail: function () { },
+                ready: function () { alert("This is a ready hook"); },
+                cancel: function () { alert("This is a cancel hook"); },
+                fail: function () { alert("This is a fail hook"); },
                 confirm: function (resp) {
+                	alert("This is a confirm hook");
                     if (resp.err_msg === 'share_timeline:ok' || resp.err_msg === 'general_share:ok') {
                         $.ajax({
                             url: '/activev1/StartShare',
